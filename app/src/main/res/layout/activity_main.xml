@@ -75,6 +75,7 @@
             android:fontFamily="@font/montserrat_medium"
             android:hint="Password"
             android:paddingLeft="20dp"
+            android:inputType="textPassword"
             android:textSize="12sp" />
 
         <TextView
