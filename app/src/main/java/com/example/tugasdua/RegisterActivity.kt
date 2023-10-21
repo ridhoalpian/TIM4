@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import com.example.tugasdua.database.DatabaseHelper
+import com.example.tugasdua.database.AppDatabase
 import com.example.tugasdua.databinding.RegisterActivityBinding
 
 class RegisterActivity : ComponentActivity() {
     private lateinit var binding: RegisterActivityBinding
-    private lateinit var db: DatabaseHelper
+    private lateinit var db: AppDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +17,7 @@ class RegisterActivity : ComponentActivity() {
         binding = RegisterActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = DatabaseHelper(this)
+        db = AppDatabase.getInstance(this)
 
         binding.btnDaftar.setOnClickListener {
             val usernameGithub = binding.edtUsrgithub.text.toString()
@@ -25,9 +25,9 @@ class RegisterActivity : ComponentActivity() {
             val username = binding.edtUsername.text.toString()
             val password = binding.edtPass.text.toString()
 
-            if (usernameGithub.isNotEmpty() &&  email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
-                val isSuccess = db.insertdata(usernameGithub, email, username, password)
-                if (isSuccess) {
+            if (usernameGithub.isNotEmpty() && email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
+                val isSuccess = db.userDao().insertAll(usernameGithub, email, username, password)
+                if (isSuccess.isNotEmpty()) {
                     Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -41,10 +41,10 @@ class RegisterActivity : ComponentActivity() {
         txtLoginListener()
     }
 
-
-    private fun txtLoginListener(){
-        binding.txtLoginsekarang.setOnClickListener{
-            startActivity(Intent(this, MainActivity::class.java))
+    private fun txtLoginListener() {
+        binding.txtLoginsekarang.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }
