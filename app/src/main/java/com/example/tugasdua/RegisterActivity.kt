@@ -20,13 +20,13 @@ class RegisterActivity : ComponentActivity() {
         db = AppDatabase.getInstance(this)
 
         binding.btnDaftar.setOnClickListener {
-            val usernameGithub = binding.edtUsrgithub.text.toString()
+            val githubUsername = binding.edtUsrgithub.text.toString()
             val email = binding.edtEmail.text.toString()
-            val username = binding.edtUsername.text.toString()
+            val appUsername = binding.edtUsername.text.toString()
             val password = binding.edtPass.text.toString()
 
-            if (usernameGithub.isNotEmpty() && email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
-                val isSuccess = db.userDao().insertAll(usernameGithub, email, username, password)
+            if (githubUsername.isNotEmpty() && email.isNotEmpty() && appUsername.isNotEmpty() && password.isNotEmpty()) {
+                val isSuccess = db.userDao().insertAll(githubUsername, email, appUsername, password)
                 if (isSuccess.isNotEmpty()) {
                     Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
